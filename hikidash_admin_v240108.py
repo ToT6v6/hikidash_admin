@@ -510,15 +510,15 @@ def page2():
         # Add points
         for idx, row in df2.iterrows():
             if row['위험도'] == '심각':
-                folium.Marker(location=[row["위도"], row["경도"]], popup=f'<div style="width: 300px;">{row['이름']}</div>', icon=folium.Icon(icon='user', color='red', prefix='fa')).add_to(m)
+                folium.Marker(location=[row["위도"], row["경도"]], popup=folium.Popup(row['이름'], max_width=200), icon=folium.Icon(icon='user', color='red', prefix='fa')).add_to(m)
             elif row['위험도'] == '경계':
-                folium.Marker(location=[row["위도"], row["경도"]], popup=f'<div style="width: 300px;">{row['이름']}</div>', icon=folium.Icon(icon='user', color='orange', prefix='fa')).add_to(m)
+                folium.Marker(location=[row["위도"], row["경도"]], popup=folium.Popup(row['이름'], max_width=200), icon=folium.Icon(icon='user', color='orange', prefix='fa')).add_to(m)
 
         # 기관 표시
         for idx, row in loc.iterrows():
             folium.Marker(
                 location=[row["위도"], row["경도"]],
-                popup=f'<div style="width: 800px;">{row['기관명']}</div>',
+                popup=folium.Popup(row['기관명'], max_width=500),
                 icon=folium.Icon(icon='heart', color='green', prefix='fa')
             ).add_to(m)
 
