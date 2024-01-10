@@ -147,7 +147,7 @@ def main_page():
                 address = df.loc[df['이름'] == selected_name, '주소'].iloc[0]
                 st.markdown(f'{address}')
     
-    tab1, tab2, tab3, tab4 = st.tabs(['현재 상태', '챗봇 대화 내역', '진행 상황', '특이사항'])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['현재 상태', '상담 내역', '사례관리사 의견', '챗봇 대화 내역', '진행 상황'])
     with tab1:
         st.markdown(f"##### {selected_name}님의 현재 상태")
         
@@ -296,25 +296,26 @@ def main_page():
                         )
                         
     with tab2:
-        # 대화내역 불러오기, 요약하기(요약은 구현x 임의로)
-        conv_hist = pd.read_csv('conversation_history.csv')
-        st.markdown(f"##### {selected_name}님과 챗봇의 대화 내역")
-        st.write(conv_hist)
-
-        st.info("대화 내역 요약")
-        if st.button('요약'):
-            st.info('임의의 대화내역')
+        if st.button('상담 내용 분석'):
+            st.markdown('#### 상담 일자')
+            st.write('2024-01-10')
+            
+            st.markdown('##### 대상자의 문제 & 욕구 내용')
+            with st.container(border=True):
+                st.markdown('클라이언트는 가족들의 무관심 속에 살아왔으며 소외감을 느끼고 있으며 관계가 원만하지 못함. <br> 경제적 어려움 때문에 다른 친구들한테 위축됨. <br>자신에 대해 부정적으로 생각하고 있음. <br> 공식적으로 지원을 이용하여 경제적 어려움에 도움을 주고 가족들과의 관계 회복 및 대인 관계에 있어 자존감을 높임.', unsafe_allow_html=True)
+            
+            st.markdown('##### 주요소 내용')
+            with st.container(border=True):
+                st.markdown('클라이언트는 아프신 아버지로 인하여 경제적으로 수입을 담당하시는 분이 어머니뿐이라서 경제적으로 어려움을 겪고 있다고 함. <br> 아버지랑 어머니는 클라이언트에게 관심을 주지 않고 무신경하다고 함. <br> 그래서 클라이언트는 항상 가족들에게 소외감을 느끼고 자신이 불필요한 존재라는 생각을 가지고 자살도 몇 번 생각해보았다고 함. <br> 유일한 친구 1명 빼고는 친구관계에 있어 위축된다고 함. <br> 그리고 비행행동을 하는 남동생이 걱정된다고 함.', unsafe_allow_html=True)
+                
+            st.markdown('##### 분석 내용')
+            with st.container(border=True):
+                st.markdown('대상자는 우울증 증세를 보이며 치료가 시급하다고 판단. <br> 가정환경이 불우하여 도움이 필요로 함. <br> 또한 가족관계에 있어 회복이 필요함. <br> 마지막으로 남동생의 비행행동에 대한 치료를 할 계획임.', unsafe_allow_html=True)
+ 
+                
     with tab3:
-        st.markdown("##### 현재 진행중인 사업")
-
-        st.markdown("##### 사례관리 진행상황(개별 대시보드에 있는 활동그래프)")
-
-        st.info('상담자의 요청사항')
-        if st.button('보기'):
-            st.info('상담자의 요청사항을 입력하시오')
-    with tab4:
         #메모장 기능(특이사항 입력)
-        st.markdown('##### 특이사항')
+        st.markdown('##### 사례관리사 의견')
         memo = st.text_area('입력', height=200)
         save_button = st.button('저장')
 
@@ -331,6 +332,25 @@ def main_page():
         except FileNotFoundError:
             st.info('저장된 메모가 없습니다')
 
+    with tab4:
+        # 대화내역 불러오기, 요약하기(요약은 구현x 임의로)
+        conv_hist = pd.read_csv('conversation_history.csv')
+        st.markdown(f"##### {selected_name}님과 챗봇의 대화 내역")
+        st.write(conv_hist)
+
+        st.info("대화 내역 요약")
+        if st.button('요약'):
+            st.info('임의의 대화내역')
+        
+    with tab5:
+        st.markdown("##### 현재 진행중인 사업")
+
+        st.markdown("##### 사례관리 진행상황(개별 대시보드에 있는 활동그래프)")
+
+        st.info('상담자의 요청사항')
+        if st.button('보기'):
+            st.info('상담자의 요청사항을 입력하시오')
+            
 
 # page2 내용 구성하기
 def page2():
